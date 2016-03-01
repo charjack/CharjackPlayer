@@ -1,0 +1,9 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item android:id="@+id/ilike" android:title="我喜欢"
+        android:orderInCategory="100" app:showAsAction="never" />
+
+    <item android:id="@+id/near_play" android:title="最近播放"
+        android:orderInCategory="100" app:showAsAction="never" />
+</menu>
