@@ -89,7 +89,7 @@ public class MainActivity extends BaseActivity {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.menu_main, menu);
+		getMenuInflater().inflate(R.menu.main,menu);
 		return true;
 	}
 
@@ -112,13 +112,13 @@ public class MainActivity extends BaseActivity {
 
 		// change ActionBar color just if an ActionBar is available
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-
+			System.out.println("------------1-----");
 			Drawable colorDrawable = new ColorDrawable(newColor);
 			Drawable bottomDrawable = getResources().getDrawable(R.drawable.actionbar_bottom);
 			LayerDrawable ld = new LayerDrawable(new Drawable[] { colorDrawable, bottomDrawable });
 
 			if (oldBackground == null) {
-
+				System.out.println("------------2-----");
 				if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR1) {
 					ld.setCallback(drawableCallback);
 				} else {

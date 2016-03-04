@@ -8,7 +8,9 @@
         android:layout_alignParentTop="true"
         android:id="@+id/listView_my_music"
         android:layout_alignParentStart="true"
-        android:layout_above="@+id/linearlayout2" />
+        android:focusable="true"
+        android:layout_above="@+id/linearlayout2"
+        />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -36,18 +38,22 @@
             android:layout_gravity="center_vertical"
             android:layout_weight="1">
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="歌名"
                 android:textColor="@android:color/white"
+                android:ellipsize="marquee"
+                android:singleLine="true"
                 android:id="@+id/textView_songName"
                 android:textAppearance="?android:attr/textAppearanceSmall"/>
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="歌手"
                 android:textColor="@android:color/white"
+                android:ellipsize="marquee"
+                android:singleLine="true"
                 android:id="@+id/textView2_singer"
                 android:textAppearance="?android:attr/textAppearanceSmall"/>
         </LinearLayout>

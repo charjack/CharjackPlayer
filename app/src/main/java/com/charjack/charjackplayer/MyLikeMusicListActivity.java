@@ -1,6 +1,8 @@
 package com.charjack.charjackplayer;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.charjack.charjackplayer.adapter.MyMusicListAdapter;
@@ -12,12 +14,13 @@ import java.util.ArrayList;
 /**
  * Created by Administrator on 2016/3/1.
  */
-public class MyLikeMusicListActivity extends BaseActivity {
+public class MyLikeMusicListActivity extends BaseActivity implements AdapterView.OnItemClickListener{
 
 
     private ListView listView_like;
     private ArrayList<Mp3Info> likemp3Infos;
     private JackPlayerApp app;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,6 +32,19 @@ public class MyLikeMusicListActivity extends BaseActivity {
         initdata();
         listView_like = (ListView) findViewById(R.id.listView_like);
         listView_like.setAdapter(new MyMusicListAdapter(this,likemp3Infos));
+        listView_like.setOnItemClickListener(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        bindPlayService();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        unbindPlayService();
     }
 
     private void initdata() {
@@ -46,6 +62,15 @@ public class MyLikeMusicListActivity extends BaseActivity {
 
     @Override
     public void change(int position) {
+
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+        playService.ChangePlayList = playService.LIKE_MUSCI_LIST;
+        playService.setMp3Infos(likemp3Infos);
+        playService.play(i);
 
     }
 }

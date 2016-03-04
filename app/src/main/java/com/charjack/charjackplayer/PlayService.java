@@ -25,12 +25,32 @@ public class PlayService extends Service implements MediaPlayer.OnCompletionList
     ArrayList<Mp3Info>  mp3Infos;
     private boolean isPause = false;
 
+    public static final int MY_MUSIC_LIST = 1;
+    public static final int LIKE_MUSCI_LIST = 2;
+
+    public int getChangePlayList() {
+        return ChangePlayList;
+    }
+
+    public void setChangePlayList(int changePlayList) {
+        ChangePlayList = changePlayList;
+    }
+
+    public int ChangePlayList= MY_MUSIC_LIST;
+
     public static final int ORDER_PLAY = 1;
     public static final int RANDOM_PLAY = 2;
     public static final int SINGLE_PLAY = 3;
     public int play_mode = ORDER_PLAY;
 
 
+    public ArrayList<Mp3Info> getMp3Infos() {
+        return mp3Infos;
+    }
+
+    public void setMp3Infos(ArrayList<Mp3Info> mp3Infos) {
+        this.mp3Infos = mp3Infos;
+    }
     public void setPlay_mode(int play_mode) {
         this.play_mode = play_mode;
 
@@ -131,22 +151,26 @@ public class PlayService extends Service implements MediaPlayer.OnCompletionList
 
 
     public void play(int position){
-        if(position>=0&&position< mp3Infos.size()){
-            try {
-                mPlayer.reset();
-                mPlayer.setDataSource(this, Uri.parse(mp3Infos.get(position).getUrl()));
-                mPlayer.prepare();
-                mPlayer.start();
-                currentPosition = position;
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            if(musicUpdateListener!=null){
-                musicUpdateListener.onChange(currentPosition);
-            }
-            isPause = false;
+        Mp3Info mp3Info = null;
+        if(position<0&&position>=mp3Infos.size()){
+            position = 0;
         }
+        mp3Info = mp3Infos.get(position);
+        try {
+            mPlayer.reset();
+            mPlayer.setDataSource(this, Uri.parse(mp3Info.getUrl()));
+            mPlayer.prepare();
+            mPlayer.start();
+            currentPosition = position;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        if(musicUpdateListener!=null){
+            musicUpdateListener.onChange(currentPosition);
+        }
+        isPause = false;
+
     }
 
     public boolean isPlaying(){

@@ -33,7 +33,7 @@ public class PlayActivity extends BaseActivity implements View.OnClickListener,S
     private ViewPager viewPager;
     private ArrayList<View> views = new ArrayList<>();
 //    private View firstpager;
-    private ArrayList<Mp3Info> mp3Infos;
+   // private ArrayList<Mp3Info> mp3Infos;
 
     private JackPlayerApp app;
 
@@ -66,7 +66,7 @@ public class PlayActivity extends BaseActivity implements View.OnClickListener,S
         seekBar1.setOnSeekBarChangeListener(this);
 
         initviewpager();
-        mp3Infos = MediaUtils.getMp3Infos(this);
+        //mp3Infos = MediaUtils.getMp3Infos(this);
         myHandler = new MyHandler(this);
     }
     private void initviewpager(){
@@ -175,7 +175,7 @@ public class PlayActivity extends BaseActivity implements View.OnClickListener,S
     @Override
     public void change(int position) {
 
-            Mp3Info mp3Info = mp3Infos.get(position);
+            Mp3Info mp3Info = playService.mp3Infos.get(position);
 //            textView1_title.setText(mp3Info.getTittle());
 
 //            System.out.println(textView1_title.getText() + "songalbum---");//名称得到了，但是没有改变
@@ -275,11 +275,11 @@ public class PlayActivity extends BaseActivity implements View.OnClickListener,S
                         break;
                 }
             case R.id.imageView1_favorite:
-                Mp3Info mp3Info = mp3Infos.get(playService.getCurrentPosition());
+                Mp3Info mp3Info = playService.mp3Infos.get(playService.getCurrentPosition());
 
                 try {
                     Mp3Info favorsonginfo =null;
-                    favorsonginfo = app.dbUtils.findFirst(Selector.from(Mp3Info.class).where("mp3InfoId","=",mp3Info.getId()));
+                    favorsonginfo = app.dbUtils.findFirst(Selector.from(Mp3Info.class).where("mp3InfoId","=",mp3Info.getMp3InfoId()));
                     if(favorsonginfo == null){
                         imageView1_favorite.setImageResource(R.mipmap.xin_hong);
                         mp3Info.setMp3InfoId(mp3Info.getId());

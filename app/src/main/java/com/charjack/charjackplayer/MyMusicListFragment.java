@@ -26,7 +26,7 @@ import java.util.ArrayList;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class MyMusicListFragment extends Fragment implements AdapterView.OnItemClickListener,View.OnClickListener{
+public class MyMusicListFragment extends Fragment implements View.OnClickListener{
 
     private ListView listView_my_music;
     private ArrayList<Mp3Info> mp3Infos;
@@ -66,8 +66,18 @@ public class MyMusicListFragment extends Fragment implements AdapterView.OnItemC
 
         imageView2_play_pause.setOnClickListener(this);
         imageView3_next.setOnClickListener(this);
-        listView_my_music.setOnItemClickListener(this);
+        listView_my_music.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                System.out.println("-------enter itemclick--");
+                mainActivity.playService.ChangePlayList = mainActivity.playService.MY_MUSIC_LIST;
+                mainActivity.playService.setMp3Infos(mp3Infos);
+                mainActivity.playService.play(i);
+            }
+        });
         imageView_album.setOnClickListener(this);
+        textView_songName.setOnClickListener(this);
+        textView2_singer.setOnClickListener(this);
         loadData();
 
         return view;
@@ -97,15 +107,20 @@ public class MyMusicListFragment extends Fragment implements AdapterView.OnItemC
         mainActivity.unbindPlayService();
     }
 
-    @Override
-    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        mainActivity.playService.play(i);
-    }
+//    @Override
+//    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+//
+//        System.out.println("enter itemclick");
+//        mainActivity.playService.ChangePlayList = mainActivity.playService.MY_MUSIC_LIST;
+//        mainActivity.playService.setMp3Infos(mp3Infos);
+//        mainActivity.playService.play(i);
+//    }
+
 
 
     public void changeUIStatusOnPlay(int position){
-        if(position>=0&&position<mp3Infos.size()){
-            Mp3Info mp3Info = mp3Infos.get(position);
+        if(position>=0&&position<mainActivity.playService.mp3Infos.size()){
+            Mp3Info mp3Info = mainActivity.playService.mp3Infos.get(position);
             textView_songName.setText(mp3Info.getTittle());
             textView2_singer.setText(mp3Info.getArtist());
             if(mainActivity.playService.isPlaying()){
@@ -141,10 +156,18 @@ public class MyMusicListFragment extends Fragment implements AdapterView.OnItemC
                 mainActivity.playService.next();
                 break;
             case R.id.imageView_album:
-                Intent intent =new Intent(mainActivity, PlayActivity.class);
-                startActivity(intent);
+                startActivity(new Intent(mainActivity, PlayActivity.class));
                 break;
+            case R.id.textView2_singer:
+                startActivity(new Intent(mainActivity, PlayActivity.class));
+                break;
+            case R.id.textView_songName:
+                startActivity(new Intent(mainActivity, PlayActivity.class));
+                break;
+
         }
 
     }
+
+
 }

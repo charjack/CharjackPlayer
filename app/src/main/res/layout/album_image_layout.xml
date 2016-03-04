@@ -23,6 +23,6 @@
         android:layout_height="300dp"
         android:id="@+id/imageView1_album"
         android:scaleType="fitCenter"
-        android:src="@mipmap/app_logo2"/>
+        android:src="@mipmap/app_logo2" />
 
 </LinearLayout>
